@@ -1,0 +1,69 @@
+task: "multi" # multi/binary
+mode: "train" # train/test
+random_state: 817
+model_name: "codellama/CodeLlama-7b-Instruct-hf"
+train_file: "/home/tu/exp/EXP_final/Dataset/multi/train.json"
+test_file: "/home/tu/exp/EXP_final/Dataset/multi/test.json"
+eval_file: "/home/tu/exp/EXP_final/Dataset/multi/eval.json"
+per_device_train_batch_size: 4 # 單個 GPU 訓練的 batch size
+per_device_eval_batch_size: 4 # 單個 GPU 驗證的 batch size
+gradient_accumulation_steps: 2 # 梯度累積 32 次，相當於 batch size = 2 * 32 = 64
+warmup_steps: 100 # 訓練開始前的學習率 Warmup 步數，防止學習率過大導致發散
+eval_strategy: "steps" # 每 N 個 step 進行一次驗證
+save_strategy: "steps" # 每 N 個 step 儲存一次 checkpoint
+eval_steps: 500 # 每 500 個 step 進行一次驗證
+save_steps: 100 # 每 1000 個 step 儲存模型
+logging_steps: 50 # 每 10 個 step 顯示一次 log
+learning_rate: 2e-4 # 設定學習率（比較適合 LoRA 訓練）
+num_train_epochs: 3 # 訓練 3 個 epoch
+weight_decay: 0.01 # L2 正則化，防止過擬合
+bf16: True # 使用 `bfloat16`（適合 RTX 40 系列 GPU）
+optim: "paged_adamw_8bit" # AdamW 8-bit 量化，降低記憶體需求
+logging_dir: "/home/tu/exp/EXP_final/finetune/result/QLoRA_Codellama_classification_7b_3/7b_logs" # 訓練過程 Log 儲存路徑
+server: "RTX4080"
+
+# finetune
+output_dir: "/home/tu/exp/EXP_final/finetune/result/example"
+# train_data_file: "/home/tu/exp/EXP_final/Dataset/multi/vul_train.pt"
+# eval_data_file: "/home/tu/exp/EXP_final/Dataset/multi/vul_eval.pt"
+# test_data_file: "/home/tu/exp/EXP_final/Dataset/multi/vul_test.pt"
+
+
+# embedding
+all_data_file: /home/tu/exp/EXP_final/Dataset/multi/vul_eval.pt
+batch_size: 8
+checkpoint_path: /home/tu/exp/EXP_final/finetune/result/QLoRA_Codellama_classification_7b_3/checkpoint-1797
+emb_output_dir: "/home/tu/exp/EXP_final/Dataset/multi"
+
+
+
+
+
+
+# server 路徑
+## binary
+# logging_dir: "/home/tu/exp/Training/Code_llama/AZOO/result/finetune_B/7b_logs" # 訓練過程 Log 儲存路徑
+# output_dir: "/home/tu/exp/Training/Code_llama/AZOO/result/finetune_B/QLoRA_Codellama_classification_7b"
+# checkpoint_path: "/home/tu/exp/QLoRA_Codellama_classification_7b/checkpoint-"
+# all_data_file: "/home/tu/exp/Training/Dataset/AZOO/binary/balanced_dataset.json"
+## multi
+# output_dir: "/home/tu/exp/EXP_final/finetune/result/unbalanced"
+# emb_output_dir: "/home/tu/exp/EXP_final/finetune/result/unbalanced/ten_classes_data_emb.pt"
+# all_data_file: "/home/tu/exp/EXP_final/Dataset/multi/ten_classes/ten_classes_data.pt"
+# checkpoint_path: "/home/tu/exp/EXP_final/finetune/result/unbalanced/checkpoint-6978"
+
+
+
+# 國網路徑
+# output_dir: "/home/tu423005/tu/codellama/10_finetune/result/QLoRA_Codellama_classification_7b"
+# emb_output_dir: "/home/tu423005/tu/codellama/10_finetune/ten_classes_data_balance_emb.pt"
+# all_data_file: "/home/tu423005/tu/codellama/10_finetune/ten_classes_data_balance.pt"
+## 9 classes
+# output_dir: "/home/tu423005/tu/codellama/9_finetune/result"
+# all_data_file: "/home/tu423005/tu/codellama/9_finetune/vul_dataset.pt"
+
+# checkpoint_path: "/home/tu423005/tu/codellama/10_finetune/result/QLoRA_Codellama_classification_7b/checkpoint-6978"
+# checkpoint_path: "/home/tu423005/tu/codellama/10_finetune/result/QLoRA_Codellama_classification_7b_balanced/checkpoint-4197"
+
+# logging_dir: "/home/tu423005/tu/codellama/10_finetune/result/QLoRA_Codellama_classification_7b/logs" # 訓練過程 Log 儲存路徑
+

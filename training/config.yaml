@@ -1,0 +1,42 @@
+task: "multi"  # multi/binary
+llm_type: "ft" # ft/nft
+graph_type: "sliced" # sliced/full
+gnn_model: "gcn" # ggnn/gcn/gat
+gnn_out_dim: 256
+fusion_type: "concat" # concat/gnn/llm
+mode: "test" # train/test/auto
+num_trails: 5 # 測試哪個seed最好
+# full_dataset_file: /home/tu/exp/Training/Dataset/AZOO/full_dataset.pt
+# llm_path: /home/tu/exp/Training/Code_llama/AZOO/result/model/QLoRA_Codellama_classification_7b_3/checkpoint-1797
+batch_size: 8
+epochs: 50
+# lr: 2e-4
+lr: 5e-5
+warmup_steps: 100
+
+# server 路徑
+# 9 classes 
+# all_data_file: "/home/tu/exp/EXP_final/Dataset/multi/vul_dataset.pt"
+llm_path: "/home/tu/exp/Training/Code_llama/AZOO/result/model/QLoRA_Codellama_classification_7b_3/checkpoint-1797"
+output_dir: "/home/tu/exp/EXP_final/training/multi/result/nine_classes"
+## 10 classes balanced
+# all_data_file: "/home/tu/exp/EXP_final/Dataset/multi/ten_classes/ten_classes_data_balance_with_fullgraph.pt"
+# all_data_file: "/home/tu/exp/EXP_final/Dataset/multi/ten_classes/ten_classes_data_balance_with_fullgraph_sliced_node.pt"
+# llm_path: "/home/tu/exp/EXP_final/finetune/result/balanced/checkpoint-4197"
+## 10 classes unbalanced
+# all_data_file: "/home/tu/exp/EXP_final/Dataset/multi/ten_classes/ten_classes_data_with_fullgraph.pt"
+# llm_path: "/home/tu/exp/EXP_final/finetune/result/unbalanced/checkpoint-6978"
+# output_dir: "/home/tu/exp/EXP_final/training/multi/result/ten_classes"
+
+## 2 classes balanced
+# all_data_file_binary: /home/tu/exp/Training/Dataset/AZOO/binary/all_data_set_binary.pt
+# all_data_file_binary: /home/tu/exp/EXP_final/Dataset/binary/all_data.pt
+
+# llm_path_binary: /home/tu/exp/Training/Code_llama/AZOO/result/finetune_B/QLoRA_Codellama_classification_7b/checkpoint-6000
+# output_dir: "/home/tu/exp/Training/Dataset/AZOO/binary/all_data_set_binary.pt"
+
+# 國網路徑
+# all_data_file_binary: /home/tu423005/tu/codellama/dataset/balanced_dataset_with_fullname_apk.json
+# llm_path_binary: /home/tu423005/tu/codellama/result/finetune_B/QLoRA_Codellama_classification_7b/checkpoint-6000
+# output_dir: "all_data_set_binary.pt"
+# llm_path: checkpoint-1797

@@ -1,0 +1,9 @@
+task: "multi" # binary/multi
+multi_llm_path: "/home/tu/exp/EXP_final/finetune/result/unbalanced/checkpoint-6978"
+# multi_llm_path: "/home/tu/exp/EXP_final/finetune/result/balanced/checkpoint-4197"
+binary_llm_path: "/home/tu/exp/Training/Code_llama/AZOO/result/finetune_B/QLoRA_Codellama_classification_7b/checkpoint-6000"
+
+# for embedding
+graph_dir: "/home/tu/exp/EXP_final/Dataset/multi/ten_classes/graph"
+# all_data_file: "/home/tu/exp/EXP_final/Dataset/multi/ten_classes/ten_classes_data_balance.pt"
+all_data_file: "/home/tu/exp/EXP_final/Dataset/multi/ten_classes/ten_classes_data.pt"
