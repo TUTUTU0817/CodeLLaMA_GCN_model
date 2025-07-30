@@ -130,6 +130,7 @@ def main():
             vul_lines = item["vul_lines"]
             unique_key = f"{apk_name}:{file_path}:{cwe_id}"
             if unique_key in processed or cwe_id in BLACKLIST_CWE:
+                logging.warning(f"[SKIP] {unique_key} 已處理過，跳過。" )
                 continue
             bin_file = os.path.join(BIN_DIR, key.replace("/", "_") + ".bin")
             try:
@@ -143,11 +144,21 @@ def main():
                 joern.expect("joern>")
                 continue
 
+            expected_class_prefix = file_path.replace("/", ".").replace(".java", "")
+
             for method in methods:
+                full_name = method.get("fullName", "")
+    
+                # 🛑 跳過與該 .java 不一致的 function
+                if not full_name.startswith(expected_class_prefix):
+                    continue
                 start, end = method.get("lineNumberStart"), method.get("lineNumberEnd")
                 if start is None or end is None:
                     continue
-
+                
+                # if method_key in processed:
+                #     logging.info(f"[SKIP] 已處理: {method_key}")
+                #     continue
                 method_code = extract_method_code(os.path.join(JAVA_DIR, apk_name, file_path), start, end)
                 buggy_lines = {
                     line: extract_buggy_code(os.path.join(JAVA_DIR, apk_name, file_path), line, cwe_id)
